@@ -1,12 +1,12 @@
 # Docker file for two phase build
 # Phase 1 - Build the application .jar file and name it builder
-FROM openjdk:11.0-jdk-slim as builder
+FROM openjdk:8-slim as builder
 VOLUME /tmp
 COPY . .
 RUN ./gradlew build
 
 # Phase 2 - Build c./ontainer with runtime only to use .jar file within
-FROM openjdk:11.0-jre-slim
+FROM openjdk:8-jre-slim
 WORKDIR /app
 # Copy .jar file (aka, builder)
 COPY --from=builder build/libs/*.jar app.jar
