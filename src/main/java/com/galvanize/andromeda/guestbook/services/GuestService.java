@@ -11,4 +11,8 @@ public class GuestService {
     public List<Guest> findAll() {
         return null;
     }
+
+    public Guest createGuest(Guest guest) {
+        return null;
+    }
 }
