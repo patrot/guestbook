@@ -14,7 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,5 +48,19 @@ class GuestServiceTest {
         when(mockedGuestRepository.findAll()).thenReturn(new ArrayList<>());
         List<Guest> result = guestService.findAll();
         assertEquals(0, result.size());
+    }
+
+    @Test
+    public void test_create_returnGuestObject() {
+        Guest expectedGuest = Guest.builder()
+                .name("Mickey Mouse")
+                .comment("Steam boat willie")
+                .build();
+
+        when(mockedGuestRepository.save(any(Guest.class))).thenReturn(expectedGuest);
+        Guest newGuest = guestService.createGuest(expectedGuest);
+        assertEquals(expectedGuest, newGuest);
+
+        verify(mockedGuestRepository).save(expectedGuest);
     }
 }

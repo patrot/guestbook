@@ -21,6 +21,6 @@ public class GuestService {
     }
 
     public Guest createGuest(Guest guest) {
-        return null;
+        return guestRepository.save(guest);
     }
 }
